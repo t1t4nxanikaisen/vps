@@ -1,0 +1,23 @@
+# Render.com Blueprint for Web-based VPS Service
+services:
+  - type: web
+    name: web-vps
+    env: docker
+    region: oregon # or your preferred region
+    plan: free # upgrade to starter or higher for better performance
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: BASIC_AUTH_USERNAME
+        value: admin
+      - key: BASIC_AUTH_PASSWORD
+        generateValue: true
+      - key: DOCKER_HOST
+        value: tcp://localhost:2375
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Database for storing VPS configurations (optional)
+  - type: postgres
+    name: vps-db
+    plan: free
+    region: oregon
